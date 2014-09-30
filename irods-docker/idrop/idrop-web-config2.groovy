@@ -2,18 +2,18 @@
 /*
  * Configuration for idrop-web - iDROP Cloud browser
  * Project page: https://code.renci.org/gf/project/irodsidrop/
- * 
+ *
  * Deployment instructions:
- * 
- * 1) Set configuration for your deployment server.  Set the name in production below to the URL you want to use.  This value is used by Grails to 
+ *
+ * 1) Set configuration for your deployment server.  Set the name in production below to the URL you want to use.  This value is used by Grails to
  * compute links, so it should be the front end for your application (e.g. if you run Apache HTTP server in front of Tomcat with SSL, this would be
  * the end-users 'https://' URL
- * 
+ *
  */
 environments {
-	
-	 production {  grails.serverURL = "https://localhost:8551/idrop-web2" } 
-	 
+
+         production {  grails.serverURL = "https://localhost:8551/idrop-web2" }
+
 }
 
 /*
@@ -22,17 +22,17 @@ environments {
  */
  idrop.config.preset.host="localhost"
  idrop.config.preset.port="1247"
- idrop.config.preset.zone="tempZone"
+ idrop.config.preset.zone="aafcZone"
  idrop.config.preset.resource=""
  // can be Standard or PAM right now
- idrop.config.preset.authScheme="Standard"
+ idrop.config.preset.authScheme="PAM"
 
 
 /*
  * 3) iDROP web includes the idrop-lite Java applet, which is launched from the iDROP web interface.  The interface needs to know where to find this jar file.
  * The Jar file should be placed on a web server in an accessible directory, and configured below
- * 
- * 
+ *
+ *
  idrop.config.idrop.lite.applet.jar="idrop-lite-1.0.0-SNAPSHOT-jar-with-dependencies.jar"
  idrop.config.idrop.lite.codebase="http://iren-web.renci.org/idrop-web/applet"
  idrop.config.idrop.lite.use.applet.dir=false
@@ -46,11 +46,11 @@ idrop.config.idrop.lite.codebase="http://localhost:8552/idrop-release"
 idrop.config.idrop.lite.use.applet.dir=false
 
 /*
- * 4) iDROP web includes a link to launch the iDROP desktop GUI, using Java WebStart.  WebStart looks for a jnlp file and the accompanying 
+ * 4) iDROP web includes a link to launch the iDROP desktop GUI, using Java WebStart.  WebStart looks for a jnlp file and the accompanying
  * lib directories.  This should be deployed on a web server at some accessible location and referred to here
- * 
+ *
  * idrop.config.idrop.jnlp="http://iren-web.renci.org:8080/idrop/idrop.jnlp"
- * 
+ *
  * idrop.config.idrop.jnlp="https://lifetime-library.ils.unc.edu/llclient/idrop.jnlp"
  */
 
@@ -64,7 +64,7 @@ idrop.config.idrop.jnlp="http://localhost:8552/idrop-release/idrop.jnlp"
 // do I support tickets? This determies whether the ticket feature is available via the interface, it also requires ticket support in iRODS itself (version 3.1+)
 idrop.config.use.tickets=true
 
-// do I want to display the profile tab and maintain user profile info 
+// do I want to display the profile tab and maintain user profile info
 idrop.config.use.userprofile=true
 
 // do I support sharing? Requires target server to have specific query support and sharing queries loaded from jargon-user-tagging
