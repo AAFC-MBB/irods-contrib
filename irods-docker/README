@@ -1,5 +1,5 @@
 This set of files can be used to create a Docker image of a standalone iRODS iCAT server
-or an iCAT server paired with the idrop-web2 web-based graphical client.
+or an iCAT server paired with the idrop-web2 web-based graphical client authenticating with PAM/Kerberos.
 
 To create and instantiate the server, use the following instructions.
 
