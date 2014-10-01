@@ -140,6 +140,7 @@ ADD ./common/common-session /etc/pam.d/common-session
 
 ADD ./idrop/runAll.sh /home/admin/runAll.sh
 RUN chmod a+x /home/admin/runAll.sh
+RUN rm /home/admin/config
 
 EXPOSE 22 80 8443 1247
 ENTRYPOINT /usr/bin/supervisord "-n"
