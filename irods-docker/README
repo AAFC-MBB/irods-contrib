@@ -6,8 +6,9 @@ To create and instantiate the server, use the following instructions.
 1. Locate the files in a single directory (known below as "path")..
 2. Rename the Dockerfile you would like to use (Dockerfile.icat or 
    Dockerfile.idrop) to Dockerfile.
-3. Run "docker build -t [repo/tag] [path]"
-4. Use "docker run -t [repo/tag]" to start the docker image.
+3. Edit or replace the custom local details file .config as required
+4. Run "docker build -t [repo/tag] [path]"
+5. Use "docker run -t [repo/tag]" to start the docker image.
 
 Note: I usually specify the hostnames and the redirect ports at startup.
  "docker run -h [hostname] -p [ssh redirect]:22 \
