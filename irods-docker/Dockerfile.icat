@@ -35,11 +35,11 @@ RUN bash -c 'source /home/admin/config && chsh -s /bin/bash $RODSUN'
 
 #install iRODS
 RUN wget -P /home/admin ftp://ftp.renci.org/pub/irods/releases/4.0.3/irods-database-plugin-postgres-1.2.deb
-RUN wget -P /home/admin ftp://ftp.renci.org/pub/irods/releases/4.0.3/irods-icat-4.0.2-64bit.deb
+RUN wget -P /home/admin ftp://ftp.renci.org/pub/irods/releases/4.0.3/irods-icat-4.0.3-64bit.deb
 
 # install package dependencies to prevent Docker build from erring out
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y `dpkg -I /home/admin/irods-icat-4.0.2-64bit.deb | sed -n 's/^ Depends: //p' | sed 's/,//g'`
-RUN dpkg -i /home/admin/irods-icat-4.0.2-64bit.deb
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y `dpkg -I /home/admin/irods-icat-4.0.3-64bit.deb | sed -n 's/^ Depends: //p' | sed 's/,//g'`
+RUN dpkg -i /home/admin/irods-icat-4.0.3-64bit.deb
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y `dpkg -I /home/admin/irods-database-plugin-postgres-1.2.deb | sed -n 's/^ Depends: //p' | sed 's/,//g'`
 RUN dpkg -i /home/admin/irods-database-plugin-postgres-1.2.deb
