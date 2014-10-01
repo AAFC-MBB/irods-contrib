@@ -22,5 +22,5 @@ into the idrop config file. E.g.,
 
 Once running...
 * You can ssh to the box with "ssh -p [ssh redirect] admin@localhost"
-* The admin password is "admin"
-* rods is the only iRODS user, with password "rods"
+* The admin password is $ADMINPW  (see .config)
+* $RODSUN is the only iRODS user, with password $RODSPW   (see .config)
