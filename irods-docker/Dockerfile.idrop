@@ -19,18 +19,19 @@ ADD ./common/supervisord.conf.etc /etc/supervisor/supervisord.conf
 ADD ./common/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 # set up an admin user
+ADD .config /home/admin/config
 RUN useradd admin
-RUN echo 'admin:admin' | chpasswd
-RUN mkdir /home/admin
+RUN bash -c 'source /home/admin/config && echo ''admin:$ADMINPW'' | chpasswd'
+#RUN mkdir /home/admin
 RUN chown admin:admin /home/admin
 RUN chsh -s /bin/bash admin
 
 # set up an iRODS user
-RUN useradd wspace
-RUN echo 'wspace:coffeesun' | chpasswd
-RUN mkdir /home/wspace
-RUN chown  wspace:wspace /home/wspace
-RUN chsh -s /bin/bash wspace
+RUN bash -c 'source /home/admin/config && useradd $RODSUN'
+RUN bash -c 'source /home/admin/config && echo "$RODSUN:$RODSPW" | chpasswd'
+RUN bash -c 'source /home/admin/config && mkdir /home/$RODSUN'
+RUN bash -c 'source /home/admin/config && chown  $RODSUN:$RODSUN /home/$RODSUN'
+RUN bash -c 'source /home/admin/config && chsh -s /bin/bash $RODSUN'
 
 #install iRODS
 RUN wget -P /home/admin ftp://ftp.renci.org/pub/irods/releases/4.0.2/irods-database-plugin-postgres-1.2.deb
@@ -57,7 +58,10 @@ RUN chmod a+x /home/admin/server.sh
 
 #irods setup_database
 ADD ./icat/dbresp /home/admin/dbresp
-RUN service postgresql start && \
+ADD ./icat/cert.cfg /home/admin/cert.cfg
+RUN bash -c 'source /home/admin/config && sed -i "s/RODSUNSTRING/$RODSUN/;s/RODSPWSTRING/$RODSPW/;s/SIDCODESTRING/$SIDCODE/;s/BYTE32STRING/$BYTE32/" /home/admin/dbresp'  && \
+  bash -c 'source /home/admin/config && sed -i "s/FQDNSTRING/$FQDN/" /home/admin/cert.cfg'  && \
+  service postgresql start && \
   sudo su -c "/var/lib/irods/packaging/setup_database.sh </home/admin/dbresp" irods
 
 #change irods user's irodsEnv file to point to localhost, since it was configured with a transient Docker container's hostname
@@ -102,7 +106,6 @@ RUN wget -P /var/lib/tomcat6/webapps https://code.renci.org/gf/download/frsrelea
 
 # PAM setup
 RUN openssl genrsa -out server.key
-ADD ./icat/cert.cfg /home/admin/cert.cfg
 RUN openssl req -new -x509 -key server.key -out chain.pem -days 3650 -config /home/admin/cert.cfg
 RUN openssl dhparam -2 -out dhparams.pem 2048
 RUN chown irods:irods *.pem
