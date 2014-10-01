@@ -80,8 +80,6 @@ RUN echo "export irodsSSLCACertificateFile=/var/lib/irods/iRODS/server/config/ch
 RUN echo "export irodsSSLVerifyServer=cert" >>/etc/profile
 RUN echo "export irodsAuthScheme=PAM">>/etc/profile
 #
-##add pam cert key for java
-RUN keytool -import -keystore /etc/ssl/certs/java/cacerts -storepass changeit -noprompt -file /var/lib/irods/iRODS/server/config/chain.pem
 RUN service postgresql start && \
   su -l -c "iRODS/irodsctl start" irods
 
