@@ -3,10 +3,10 @@ aafcZone
 
 
 
-AAFC_BIO_SID
-northamericabluelabcoattelephone
-wspace
-coffeesun
+SIDCODESTRING
+BYTE32STRING
+RODSUNSTRING
+RODSPWSTRING
 
 localhost
 
