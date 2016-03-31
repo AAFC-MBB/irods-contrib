@@ -4,24 +4,28 @@ services:
   db:
     image: postgres:9.4
     volumes:
-      - export:/var/lib/postgresql/data/
+      - /home/ubuntu/export:/export
     environment:
-      - PGDATA=/var/lib/postgresql/data/pgdata
+      - PGDATA=/export/pgdata
     container_name: db
     restart: always
 
   icat:
     environment:
       - POSTGRES_SERVER=db
+      - ICAT_PLUGIN=1.8
+      - EXPORT=/export
     build:
       context: ./icat
+      args:
+        - ICAT_PLUGIN=1.8
     links:
       - db:db
     container_name: icat
     devices:
       - /dev/urandom:/dev/random
-    volumes:
-      - export:/export
+    volumes_from:
+      - db:rw
     hostname: icat
     ports:
       - 0.0.0.0:1247:1247
@@ -52,4 +56,21 @@ services:
       - icat:ro
     container_name: web
     hostname: web
+    restart: always
+
+  resource1:
+    environment:
+      - EXPORT=/expat
+    build:
+      context: ./icat
+    links:
+      - icat:icat
+    container_name: iresc1
+    devices:
+      - /dev/urandom:/dev/random
+    volumes:
+      - /home/ubuntu/expat:/expat
+    volumes_from:
+      - icat:ro
+    hostname: iresc1
     restart: always
